@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-      -name: Validating format...
+      - name: Validating format...
         run: |
           npm run lint
           npm run format
