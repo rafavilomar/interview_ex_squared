@@ -13,7 +13,7 @@ import { MakesModule } from './module/makes/makes.module';
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: true
+      autoSchemaFile: true,
     }),
     TypeOrmModule.forRoot({
       type: 'mongodb',
@@ -28,7 +28,7 @@ import { MakesModule } from './module/makes/makes.module';
       authSource: 'admin',
       migrations: [],
     }),
-    MakesModule
+    MakesModule,
   ],
 })
 export class AppModule {}

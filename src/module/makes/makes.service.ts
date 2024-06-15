@@ -14,14 +14,14 @@ export class MakesService {
     @InjectRepository(Makes)
     private makesRepository: Repository<Makes>,
     private readonly makesProxy: MakesProxy,
-    private readonly vehicleTypesProxy: VehicleTypesProxy) {}
+    private readonly vehicleTypesProxy: VehicleTypesProxy,
+  ) {}
 
   /**
    * Get all makes from database or NHTSA's API
-   * @returns 
+   * @returns
    */
   async getAllMakes(): Promise<Makes[]> {
-
     let response: Makes[] = await this.makesRepository.find();
 
     if (response.length === 0) {
@@ -38,14 +38,15 @@ export class MakesService {
   private async getMakesFromExternalService(): Promise<Makes[]> {
     const makes: Makes[] = [];
 
-    const [vehicleTypes, makesToParse]: [VehicleTypes[], any[]] = await Promise.all([
-      this.getVehicleTypesFromExternalService(),
-      this.makesProxy.getAll()
-    ]);
+    const [vehicleTypes, makesToParse]: [VehicleTypes[], any[]] =
+      await Promise.all([
+        this.getVehicleTypesFromExternalService(),
+        this.makesProxy.getAll(),
+      ]);
 
-    makesToParse.forEach(make => {
-      makes.push(MakesAdapter.parse(make, vehicleTypes))
-    })
+    makesToParse.forEach((make) => {
+      makes.push(MakesAdapter.parse(make, vehicleTypes));
+    });
 
     this.makesRepository.save(makes);
 
@@ -57,7 +58,7 @@ export class MakesService {
    */
   private async getVehicleTypesFromExternalService() {
     const vehicleTypes: VehicleTypes[] = [];
-    (await this.vehicleTypesProxy.getAll()).forEach(type => {
+    (await this.vehicleTypesProxy.getAll()).forEach((type) => {
       vehicleTypes.push(VehicleTypesAdapter.parse(type));
     });
 

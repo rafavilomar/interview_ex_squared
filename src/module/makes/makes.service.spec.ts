@@ -34,7 +34,12 @@ describe('AppService', () => {
 
   it('should return makes from the database if available', async () => {
     const makesFromDb: Makes[] = [
-      { makeId: 1, makeName: "name", vehicleTypes: [{ typeId: 1, typeName: "name" }] }];
+      {
+        makeId: 1,
+        makeName: 'name',
+        vehicleTypes: [{ typeId: 1, typeName: 'name' }],
+      },
+    ];
     jest.spyOn(makesRepository, 'find').mockResolvedValueOnce(makesFromDb);
 
     const result = await makesService.getAllMakes();
@@ -42,15 +47,21 @@ describe('AppService', () => {
   });
 
   it('should fetch makes from external service if database is empty', async () => {
-    const parsedMakes: Makes[] = [{ makeId: 1, makeName: 'name', vehicleTypes: [] }];
+    const parsedMakes: Makes[] = [
+      { makeId: 1, makeName: 'name', vehicleTypes: [] },
+    ];
 
     jest.spyOn(makesRepository, 'find').mockResolvedValueOnce([]);
-    jest.spyOn(makesProxy, 'getAll').mockResolvedValueOnce([{AllVehicleMakes: null}]);
+    jest
+      .spyOn(makesProxy, 'getAll')
+      .mockResolvedValueOnce([{ AllVehicleMakes: null }]);
     jest.spyOn(vehicleTypesProxy, 'getAll').mockResolvedValueOnce([]);
-    jest.spyOn(makesRepository, 'save').mockResolvedValueOnce(parsedMakes as any);
+    jest
+      .spyOn(makesRepository, 'save')
+      .mockResolvedValueOnce(parsedMakes as any);
 
     jest.spyOn(MakesAdapter, 'parse').mockImplementation(({}, []) => {
-      return { makeId: 1, makeName: "name", vehicleTypes: [] };
+      return { makeId: 1, makeName: 'name', vehicleTypes: [] };
     });
 
     const result = await makesService.getAllMakes();
