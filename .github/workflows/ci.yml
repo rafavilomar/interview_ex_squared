@@ -19,7 +19,7 @@ jobs:
           cache: "npm"
       - name: Validating format...
         run: |
-          npn ci
+          npm ci
           npm run lint
           npm run format
       - name: Check for formatting changes
