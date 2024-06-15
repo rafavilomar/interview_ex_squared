@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+
+  pull_request:
+    types: [opened]
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Building...
+        run: |
+          npm ci 
+          npm run build
+      - name: Testing...
+        run: |
+          npm ci 
+          npm run test
+      - name: Creating service image...
+        run: docker-compose build
