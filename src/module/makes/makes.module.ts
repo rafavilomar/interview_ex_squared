@@ -8,9 +8,7 @@ import Makes from './entity/makes.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([Makes, VehicleTypes])
-    ],
-    providers: [MakesService, MakesProxy, VehicleTypesProxy, MakesResolver],
+  imports: [TypeOrmModule.forFeature([Makes, VehicleTypes])],
+  providers: [MakesService, MakesProxy, VehicleTypesProxy, MakesResolver],
 })
-export class MakesModule { }
+export class MakesModule {}

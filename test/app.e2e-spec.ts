@@ -9,7 +9,6 @@ describe('AppController (e2e)', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-      
     }).compile();
 
     app = moduleFixture.createNestApplication();
@@ -26,14 +25,14 @@ describe('AppController (e2e)', () => {
 
     return request(app.getHttpServer())
       .post('/graphql')
-      .send({query})
+      .send({ query })
       .expect(200)
-      .expect(res => {
-        expect(res.body.data.getAllMakes.length).toEqual(11350)
+      .expect((res) => {
+        expect(res.body.data.getAllMakes.length).toEqual(11350);
       });
   });
 
   afterAll(() => {
     app.close();
-  })
+  });
 });
