@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: interview_db
+    ports:
+      - "27017:27017"
+    networks:
+      - app_network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: interview_backend
+    restart: always
+    env_file: .env
+    depends_on:
+      - mongodb
+    ports:
+      - 3500:3500
+    networks:
+      - app_network
+    command: npm start
+
+networks:
+  app_network:
+    driver: bridge
