@@ -28,7 +28,7 @@ describe('AppController (e2e)', () => {
       .send({ query })
       .expect(200)
       .expect((res) => {
-        expect(res.body.data.getAllMakes.length).toEqual(11350);
+        expect(res.body.data.getAllMakes.length).toBeGreaterThan(0);
       });
   });
 

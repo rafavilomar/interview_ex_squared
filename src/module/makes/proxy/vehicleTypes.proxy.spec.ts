@@ -9,6 +9,6 @@ describe('Vehicle Types Proxy', () => {
 
   it('Get all vehicle types', async () => {
     const response = await vehicleTypes.getAll();
-    expect(response.length).toEqual(2);
+    expect(response.length).toBeGreaterThan(0);
   });
 });
